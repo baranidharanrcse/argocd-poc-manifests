@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-poc-auto
+  labels:
+    app: argocd-poc-auto
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: argocd-poc-auto
+  template:
+    metadata:
+      labels:
+        app: argocd-poc-auto
+    spec:
+      containers:
+        - name: argocd-poc
+          image: myapp:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: APP_VERSION
+              value: "v1"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
