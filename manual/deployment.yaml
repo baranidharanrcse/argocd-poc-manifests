@@ -16,13 +16,13 @@ spec:
     spec:
       containers:
         - name: argocd-poc
-          image: myapp:v4
+          image: myapp:v5
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           env:
             - name: APP_VERSION
-              value: "v4"
+              value: "v5"
           readinessProbe:
             httpGet:
               path: /actuator/health
